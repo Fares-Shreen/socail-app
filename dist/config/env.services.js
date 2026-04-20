@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ADMIN = exports.USER = exports.REDIS_URL = exports.EMAIL_PASSWORD = exports.EMAIL = exports.GOOGLE_CLIENT_ID = exports.SEND_EMAIL_EVENT = exports.REFRESH_TOKEN_ACCESS_ADMIN = exports.ACCESS_TOKEN_ACCESS_ADMIN = exports.REFRESH_TOKEN_ACCESS_USER = exports.ACCESS_TOKEN_ACCESS_USER = exports.JWT_SECRET = exports.IV_LENGTH = exports.SALT_ROUNDS = exports.DBURL = exports.PORT = void 0;
+const path_1 = __importDefault(require("path"));
+const dotenv_1 = require("dotenv");
+const envStatus = process.env.NODE_ENV;
+(0, dotenv_1.config)({ path: path_1.default.resolve(__dirname, `../../.env.${envStatus}`) });
+exports.PORT = process.env.PORT;
+exports.DBURL = process.env.DBURL;
+exports.SALT_ROUNDS = process.env.SALT_ROUNDS;
+exports.IV_LENGTH = process.env.IV_LENGTH;
+exports.JWT_SECRET = process.env.JWT_SECRET;
+exports.ACCESS_TOKEN_ACCESS_USER = process.env.ACCESS_TOKEN_ACCESS_USER;
+exports.REFRESH_TOKEN_ACCESS_USER = process.env.REFRESH_TOKEN_ACCESS_USER;
+exports.ACCESS_TOKEN_ACCESS_ADMIN = process.env.ACCESS_TOKEN_ACCESS_ADMIN;
+exports.REFRESH_TOKEN_ACCESS_ADMIN = process.env.REFRESH_TOKEN_ACCESS_ADMIN;
+exports.SEND_EMAIL_EVENT = process.env.SEND_EMAIL_EVENT;
+exports.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+exports.EMAIL = process.env.EMAIL;
+exports.EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
+exports.REDIS_URL = process.env.REDIS_URL;
+exports.USER = process.env.USER;
+exports.ADMIN = process.env.ADMIN;
