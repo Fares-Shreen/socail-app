@@ -249,7 +249,6 @@ class AuthServices {
                 firstName: given_name || "User",
                 lastName: family_name || "Google",
                 email,
-                password: hash({ plainText: randomUUID() }),
                 provider: providerEnum.google,
                 role: roleEnum.user,
                 confirmed: true,

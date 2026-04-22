@@ -25,7 +25,11 @@ const userSchema: Schema<IUser> = new Schema(
         lastName: { type: String, required: true, trim: true, minlength: 3, maxlength: 25 },
         email: { type: String, required: true, unique: true, trim: true },
         age: { type: Number, min: 18, max: 60 },
-        password: { type: String, required: true, trim: true },
+        password: {
+            type: String, required: function () {
+                return this.provider === providerEnum.system ? true : false;
+            } 
+            , trim: true },
         phone: { type: String, trim: true },
         gender: { type: String, enum: Object.values(genderEnum) },
         provider:{ type: String,required: true,enum: Object.values(providerEnum) },
