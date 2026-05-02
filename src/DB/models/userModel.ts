@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { genderEnum, providerEnum, roleEnum } from "../../common/enum/enum";
 
-export interface IUser  {
+export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
@@ -14,9 +14,11 @@ export interface IUser  {
     provider?: providerEnum;
     confirmed: boolean;
     changeCredentials: Date;
-    userName: string; 
+    profileImageUrl?: string;
+    userName: string;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt?: Date;
 }
 
 const userSchema: Schema<IUser> = new Schema(
@@ -28,15 +30,18 @@ const userSchema: Schema<IUser> = new Schema(
         password: {
             type: String, required: function () {
                 return this.provider === providerEnum.system ? true : false;
-            } 
-            , trim: true },
+            }
+            , trim: true
+        },
         phone: { type: String, trim: true },
         gender: { type: String, enum: Object.values(genderEnum) },
-        provider:{ type: String,required: true,enum: Object.values(providerEnum) },
+        provider: { type: String, required: true, enum: Object.values(providerEnum) },
         address: { type: String, trim: true },
-        role: { type: String, enum: Object.values(roleEnum) , default: roleEnum.user},
+        role: { type: String, enum: Object.values(roleEnum), default: roleEnum.user },
+        profileImageUrl: { type: String, default: null },
         confirmed: { type: Boolean, default: false },
-        changeCredentials: { type:Date , default: Date.now() }
+        changeCredentials: { type: Date, default: Date.now() },
+        deletedAt: { type: Date, default: null }
     },
     {
         timestamps: true,
@@ -47,6 +52,8 @@ const userSchema: Schema<IUser> = new Schema(
     }
 );
 
+
+
 userSchema.virtual("userName")
     .get(function (this: IUser) {
         return `${this.firstName} ${this.lastName}`;
@@ -56,6 +63,18 @@ userSchema.virtual("userName")
         this.firstName = parts[0] || "";
         this.lastName = parts[1] || "";
     });
+
+// userSchema.pre(["findOne", "find", "findOneAndUpdate"], function () {
+//     console.log(this.getQuery());
+//     const {paranoid,...rest} = this.getQuery();
+//     if (paranoid==false) {
+//         this.setQuery({...rest});
+//     }
+//     else{
+//         this.setQuery({...rest,deletedAt:{$exists:false}});
+//     }
+    
+// })    
 
 const userModel: Model<IUser> =
     mongoose.models.User || mongoose.model<IUser>("User", userSchema);

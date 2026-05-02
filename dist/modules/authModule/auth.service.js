@@ -16,9 +16,11 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const node_crypto_1 = require("node:crypto");
 const google_auth_library_1 = require("google-auth-library");
 const redis_service_1 = __importDefault(require("../../cache/redis.service"));
+const s3_service_1 = require("../../common/service/s3.service");
 class AuthServices {
     _userModel = user_repositories_1.default;
     _redisService = redis_service_1.default;
+    _S3service = new s3_service_1.S3service();
     constructor() { }
     sendEmailOTP = async ({ email, subject }) => {
         const bloackedOtp = await this._redisService.ttl(this._redisService.block_otp_key({ email, subject }));
@@ -105,6 +107,7 @@ class AuthServices {
     };
     confirmSignUp = async (req, res, next) => {
         const { email, otp } = req.body;
+        console.log(email, otp);
         const userExist = await this._userModel.findOne({ filter: { email } });
         if (!userExist) {
             throw new global_error_handler_1.appError("User not exist", 409);
@@ -204,7 +207,6 @@ class AuthServices {
                 firstName: given_name || "User",
                 lastName: family_name || "Google",
                 email,
-                password: (0, hash_security_1.hash)({ plainText: (0, node_crypto_1.randomUUID)() }),
                 provider: enum_1.providerEnum.google,
                 role: enum_1.roleEnum.user,
                 confirmed: true,
@@ -341,6 +343,19 @@ class AuthServices {
             ttl: decoded.exp - Math.floor(Date.now() / 1000),
         });
         res.status(200).json({ message: "success logout" });
+    };
+    uploadFile = async (req, res, next) => {
+        console.log(req.body);
+        const { fileName, contentType } = req.body;
+        if (!fileName) {
+            throw new global_error_handler_1.appError("File name is required", 400);
+        }
+        if (!contentType) {
+            throw new global_error_handler_1.appError("File type is required", 400);
+        }
+        const { url, key } = await this._S3service.createPresignedUrl({ contentType, path: "profile", fileName });
+        this._userModel.findOneAndUpdate({ filter: { _id: req.user?._id }, update: { profileImageUrl: url } });
+        res.status(200).json({ message: "success upload file", data: { url, key } });
     };
 }
 exports.default = new AuthServices();

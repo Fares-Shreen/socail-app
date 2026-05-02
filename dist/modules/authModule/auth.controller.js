@@ -24,4 +24,5 @@ authRouter.post("/resendForgetPasswordOtp", (0, validation_1.default)(auth_valid
 authRouter.post("/confirmForegtPasswordOtp", (0, validation_1.default)(auth_validation_1.resetPasswordSchema), auth_service_1.default.confirmForegtPasswordOtp);
 authRouter.post("/logout", (0, validation_1.default)(auth_validation_1.logoutSchema), authentication_1.default, (0, authorization_1.default)([enum_1.roleEnum.admin, enum_1.roleEnum.user]), auth_service_1.default.logout);
 authRouter.post("/refreshToken", auth_service_1.default.refreshToke);
+authRouter.post("/uploadFile", authentication_1.default, auth_service_1.default.uploadFile);
 exports.default = authRouter;

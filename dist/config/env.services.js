@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ADMIN = exports.USER = exports.REDIS_URL = exports.EMAIL_PASSWORD = exports.EMAIL = exports.GOOGLE_CLIENT_ID = exports.SEND_EMAIL_EVENT = exports.REFRESH_TOKEN_ACCESS_ADMIN = exports.ACCESS_TOKEN_ACCESS_ADMIN = exports.REFRESH_TOKEN_ACCESS_USER = exports.ACCESS_TOKEN_ACCESS_USER = exports.JWT_SECRET = exports.IV_LENGTH = exports.SALT_ROUNDS = exports.DBURL = exports.PORT = void 0;
+exports.AWS_SECRET_ACCESS_KEY = exports.AWS_ACCESS_KEY = exports.AWS_BUCKET_NAME = exports.AWS_REGION = exports.ADMIN = exports.USER = exports.REDIS_URL = exports.EMAIL_PASSWORD = exports.EMAIL = exports.GOOGLE_CLIENT_ID = exports.SEND_EMAIL_EVENT = exports.REFRESH_TOKEN_ACCESS_ADMIN = exports.ACCESS_TOKEN_ACCESS_ADMIN = exports.REFRESH_TOKEN_ACCESS_USER = exports.ACCESS_TOKEN_ACCESS_USER = exports.JWT_SECRET = exports.IV_LENGTH = exports.SALT_ROUNDS = exports.DBURL = exports.PORT = void 0;
 const path_1 = __importDefault(require("path"));
 const dotenv_1 = require("dotenv");
 const envStatus = process.env.NODE_ENV;
@@ -24,3 +24,7 @@ exports.EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 exports.REDIS_URL = process.env.REDIS_URL;
 exports.USER = process.env.USER;
 exports.ADMIN = process.env.ADMIN;
+exports.AWS_REGION = process.env.AWS_REGION;
+exports.AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME;
+exports.AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+exports.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;

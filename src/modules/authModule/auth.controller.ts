@@ -5,6 +5,8 @@ import { confirmOtpSchema, forgetPasswordSchema, logoutSchema, resendOtpSchema, 
 import isAuthorized from "../../common/middleware/authorization"
 import isAthenticated from "../../common/middleware/authentication"
 import { roleEnum } from "../../common/enum/enum"
+import multerCloud from "../../common/middleware/multer.colud"
+import { store_type_enum } from "../../common/enum/multerEnum"
 
 
 const authRouter = express.Router()
@@ -22,6 +24,7 @@ authRouter.post("/resendForgetPasswordOtp",validation(resendOtpSchema),authServi
 authRouter.post("/confirmForegtPasswordOtp",validation(resetPasswordSchema),authService.confirmForegtPasswordOtp)
 authRouter.post("/logout", validation(logoutSchema), isAthenticated, isAuthorized([roleEnum.admin, roleEnum.user]),authService.logout)
 authRouter.post("/refreshToken", authService.refreshToke)
+authRouter.post("/uploadFile",isAthenticated,authService.uploadFile)
 
 
 
